@@ -1,1 +1,1 @@
-# BAmazon /'bēˈaməˌzän/
+# BAmazon /'bēˈaməzən/
