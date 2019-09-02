@@ -37,8 +37,8 @@ function pickItem() {
             if (isNaN(value) === false) {
                 return true;
             }
-            console.log("<><><>><><><><><><><><><>")
-            console.log("You might want to check that ID number again:)")
+            console.log("<><><><><><><><><><><><><>")
+            console.log("You might want to check that ID number again:)");
             return false;
         }
     },
@@ -50,8 +50,8 @@ function pickItem() {
             if (isNaN(value) === false) {
                 return true;
             }
-            console.log("<><><>><><><><><><><><><>");
-            console.log("Please provide a number.")
+            console.log("<><><><><><><><><><><><><>")
+            console.log("Please provide a number.");
             return false;
         }
     } 
@@ -62,14 +62,25 @@ function pickItem() {
             if (err) throw err;
             if (quantity > results[0].stock_quantity) {
                 console.log("Sorry, we don't have that many in stock. Try a smaller quantity!")
-                endConnection();
+                end();
                 return;
             }
             else {
                 updateStock();
             }
-        }
-    )
+        });
+});
 }
-)
+
+function updateStock() {
+    connection.query("UPDATE products SET stock_quantity = stock_quantity ? WHERE item_id = ?", function (err, results) {
+        if (err) throw err;
+        console.log("Thank you for your purchase! Your total is $" + price * amount);
+        end();
+    });
 }
+
+function end() {
+    connection.end();
+}
+
