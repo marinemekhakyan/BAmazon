@@ -1,6 +1,7 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 
+
 var connection = mysql.createConnection({
     host: "localhost",
     port:3306,
@@ -16,13 +17,14 @@ connection.connect(function(err) {
 });
 
 function listProducts() {
-    connection.query("SELECT * FROM products ORDER BY product_name", function (err, results) {
+    connection.query("SELECT * FROM products ORDER BY product_name ASC", function (err, results) {
         if (err) throw err;
-        console.log("<><><>><><><><><><><><><>");
+        console.log("<><><><><><><><><><><><><>");
         console.log("Available items: ");
         for (var i = 0; i < results.length; i++) {
             console.log("\nID - " + results[i].item_id + "\nProduct Name - " + results[i].product_name + "\nPrice - " + "$" + results[i].price);
-            console.log("<><><>><><><><><><><><><>");
+            console.log("<><><><><><><><><><><><><>");
+            var price = results[i].price;            
         }
         pickItem();
     });
@@ -57,25 +59,30 @@ function pickItem() {
     } 
 ]).then
 (function (answers) {
+    // var price = results[i].price;
+    var customerSelect = answers.cSelection;
+    var quantity = answers.quantity;
     connection.query(
         "SELECT * FROM products WHERE item_id = " + answers.cSelection, function (err, results) {
             if (err) throw err;
+            var result = results[0]
+            var price = result.price;
             if (quantity > results[0].stock_quantity) {
                 console.log("Sorry, we don't have that many in stock. Try a smaller quantity!")
                 end();
                 return;
             }
             else {
-                updateStock();
+                updateStock(price, quantity, customerSelect);
             }
         });
 });
 }
 
-function updateStock() {
-    connection.query("UPDATE products SET stock_quantity = stock_quantity ? WHERE item_id = ?", function (err, results) {
+function updateStock(price, quantity, customerSelect) {
+    connection.query("UPDATE products SET stock_quantity = stock_quantity - ? WHERE item_id = ?", [quantity, customerSelect], function (err, results) {
         if (err) throw err;
-        console.log("Thank you for your purchase! Your total is $" + price * amount);
+        console.log("Thank you for your purchase! Your total is $" + price * quantity);
         end();
     });
 }
