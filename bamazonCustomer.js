@@ -33,7 +33,7 @@ function pickItem() {
     inquirer.prompt([{
         name: "cSelection",
         type: "input",
-        message: "Welcome! We B Amazon:) Please select an item by its ID.",
+        message: "Welcome! We B Amazon:) Please select an item by its ID. [Quit with Q]",
         validate: function (value) {
             if (isNaN(value) === false) {
                 return true;
@@ -65,7 +65,7 @@ function pickItem() {
                     var result = results[0]
                     var price = result.price;
                     if (quantity > results[0].stock_quantity) {
-                        console.log("Sorry, we don't have that many in stock. Try a smaller quantity!")
+                        console.log("Sorry, we don't have that many in stock. Try a smaller quantity! [Quit with Q]")
                         end();
                         return;
                     }

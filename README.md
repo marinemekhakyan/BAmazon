@@ -15,4 +15,4 @@ Before you start, install the below packages and don't forget to "*npm i*". Have
 ![](https://github.com/marinemekhakyan/BAmazon/blob/master/assets/sql.gif?raw=true)
 
 
-Link to portfolio https://marinemekhakyan.github.io/i-portfolio/work.html
+Link to portfolio https://marinemekhakyan.github.io/i-portfolio/work-2.html
